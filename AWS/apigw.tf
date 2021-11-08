@@ -60,9 +60,33 @@ resource "aws_api_gateway_integration_response" "integration_response" {
 
 resource "aws_api_gateway_deployment" "deployment" {
   rest_api_id = aws_api_gateway_rest_api.api_gateway_rest.id
-  stage_name  = var.api_deploy_stage_name
+  # stage_name  = var.api_deploy_stage_name
 
-  depends_on = [
-    aws_api_gateway_integration.api_gateway_integration
-  ]
+  #depends_on = [
+  #  aws_api_gateway_integration.api_gateway_integration
+  #]
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_api_gateway_account" "cloudwatch" {
+  cloudwatch_role_arn = aws_iam_role.cloudwatch.arn
+}
+
+resource "aws_api_gateway_stage" "api_stage" {
+  deployment_id = aws_api_gateway_deployment.deployment.id
+  rest_api_id   = aws_api_gateway_rest_api.api_gateway_rest.id
+  stage_name    = var.api_deploy_stage_name
+}
+
+resource "aws_api_gateway_method_settings" "all" {
+  rest_api_id = aws_api_gateway_rest_api.api_gateway_rest.id
+  stage_name  = aws_api_gateway_stage.api_stage.stage_name
+  method_path = "*/*"
+
+  settings {
+    metrics_enabled = true
+    logging_level   = "INFO"
+  }
 }

@@ -36,9 +36,3 @@ module "AWS" {
   api_gw_integration    = var.api_gw_integration
   api_deploy_stage_name = terraform.workspace
 }
-
-
-
-# module "cloudwatch" {
-#      source = ".Modules/CloudWatch"
-#      }

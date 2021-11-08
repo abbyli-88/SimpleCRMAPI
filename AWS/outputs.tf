@@ -5,5 +5,5 @@ output "s3_bucket_name" {
 
 output "api_deployment_url" {
   description = "Deployment API URL"
-  value       = aws_api_gateway_deployment.deployment.invoke_url
+  value       = aws_api_gateway_stage.api_stage.invoke_url
 }
