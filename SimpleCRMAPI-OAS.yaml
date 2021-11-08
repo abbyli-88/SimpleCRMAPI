@@ -1,0 +1,95 @@
+---
+swagger: "2.0"
+info:
+  description: A simple CRM API that manages operations to list, create, update, and delete customer entries.
+  version: 1.0.0
+  title: Simple CRM API
+host: AWS
+schemes:
+- https
+paths:
+  /Customers:
+    get:
+      tags:
+      - customers
+      summary: Lists all the customers info, cluding customer id as id, first name as fisrtName, last name as lastName, and address.
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/customers'
+    post:
+      tags:
+      - customers
+      summary: Adds a new customer
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: customers
+        description: Specify new customer's info
+        required: true
+        schema:
+          $ref: '#/definitions/customers'
+      responses:
+        "200":
+          description: Successful response
+    delete:
+      tags:
+      - customers
+      summary: Deletes an exisitng customer by its ID
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: id
+        description: Define the ID of the customer to delete
+        required: true
+        schema:
+          $ref: '#/definitions/deleteCustomer'
+      responses:
+        "200":
+          description: Successful operation
+    patch:
+      tags:
+      - customers
+      summary: Updates an existing customer's info
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: customers
+        description: Update new values to a customer
+        required: true
+        schema:
+          $ref: '#/definitions/customers'
+      responses:
+        "200":
+          description: Successful operation
+definitions:
+  customers:
+    properties:
+      id:
+        type: string
+        description: Customer ID
+      firstName:
+        type: string
+        description: Customer's first Name
+      lastName:
+        type: string
+        description: Customer's last name
+      address:
+        type: string
+        description: Customer's address
+  deleteCustomer:
+    properties:
+      id:
+        type: string
+        description: Customer ID

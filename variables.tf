@@ -10,8 +10,7 @@ variable "lambda_funtion_name" {
 
 variable "apigw_method" {
   description = "AWS API Gateway Methods for Resource Customer"
-
-  type = list(any)
+  type        = list(any)
 }
 
 variable "api_description" {
