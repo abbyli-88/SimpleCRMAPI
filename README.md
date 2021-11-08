@@ -1,9 +1,9 @@
-# DeloitteCRMAPI
+# SimpleCRMAPI
 
 
 ## Documentation for API Endpoints
 
-All URIs are relative to SimpleCRMAPI-OAS.yaml or *https://app.swaggerhub.com/apis/k55846/simpleCustomerAPI/1.0.0
+All URIs are relative to SimpleCRMAPI-OAS.yaml or *https://app.swaggerhub.com/apis/k55846/SimpleCRMAPI/1.0.0
 
 HTTP request | Request Body | Response Body | Description
 ------------ | ------------- | ------------- | ------------- 
