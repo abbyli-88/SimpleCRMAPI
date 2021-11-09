@@ -1,5 +1,7 @@
 # SimpleCRMAPI
+A simple CRM API that manages operations and allows users to list, create, update, and delete customer entries.
 
+## Infrastructure
 
 ## Usage
 
