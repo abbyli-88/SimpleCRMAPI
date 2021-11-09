@@ -12,7 +12,7 @@ paths:
     get:
       tags:
       - customers
-      summary: Lists all the customers info, cluding customer id as id, first name as fisrtName, last name as lastName, and address.
+      summary: Lists all the customers' info, including customer id as id, first name as fisrtName, last name as lastName, and address.
       produces:
       - application/json
       parameters: []
@@ -42,7 +42,7 @@ paths:
     delete:
       tags:
       - customers
-      summary: Deletes an exisitng customer by its ID
+      summary: Deletes an existing customer by its ID
       consumes:
       - application/json
       parameters:
