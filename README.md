@@ -5,15 +5,18 @@ A simple CRM API that manages operations and allows users to list, create, updat
 ![ alt text for screen readers](https://github.com/gowithkk/SimpleCRMAPI/blob/main/Image/SimpleCRMAPI-Architecture.png) 
 
 ## Description
-This SimpleCRMAPI creates the following resources in AWS in support of the insfrature. When executing deployment:
-* SimpleCRMAPI creates the following
+This SimpleCRMAPI creates the following resources in AWS using Terraform. When executing terraform deploy:
+* SimpleCRMAPI creates
      * Custom IAM policy and roles
      * API Gateway with a single resource "/Custoemrs" and HTTP Methods
-     * Lambda functions 
-     * DynamoDB
-     * CloudWatch Logs and Alarms
+     * 4 Lambda functions that support GET, POST, DELETE, and PATCH
+     * A DynamoDB with the name SimpleCRM
+     * CloudWatch Logs for Lambda and API Gateway, and Metric Alarms for Lambda and DynamoDB
      * S3 bucket
-* SimpleCRMAPI also zips python source code and uploads zip files to the S3 bucket in support of Lambda functions.
+* SimpleCRMAPI also zips python source code and uploads zip files to S3 bucket in support of Lambda functions.
+* Once deployment is completed, the following display as outputs:
+     * S3 bucket name
+     * API endpoint URL
 
 ## Documentation for API Endpoints
 
@@ -56,22 +59,36 @@ Note that this project may create resources which cost money. Run `terraform des
 | <a name="requirement_random"></a> [random](#requirement\_random) | >= 2.2.0 |
 
 ## Assumptions & Specifications
- * User authentication is not required. Therefore, API Gateway in this project has been set to No Auth.
+ * User authentication is not required. API Gateway in this project has been set to No Auth.
  * Each customer has a unique customer id to avoid conflicts. User "id" must be included in the HTTP body when creating, updating, and deleting customer entries in DynamoDB.
-
-
- * Terraform state is managed locally as this requires a dynamoDB table and S3 bucket predeifined. However, if you plan to manage state using state lock with S3 and dynamoDB, feel free to uncomment line 19~26 in main.tf and change values to match your DB name and S3 bucket name.
- * For security concerns, a VPC was introducted to this project. Since only a few lambda functions, one API gateway, and one single DynamoDB are introducted in this project, no VPC is created for simplicity. Other considerations include, interactions between API gateway, lambda functions, and DynamoDB table are protected by IAM roles. For future development, if Lambda functions need to access other resources, such as EC2 instances, RDS instances, or other AWS resources running inside a VPC, then the Lambda functions need to be placed inside of the VPC and access to DynamoDB can be granted by providing a VPC Endpoint or a NAT Gateway. 
- * The ideal 
- * Security 
-     * API Gateway
-          * api_gateway_cloudwatch_global role is assigned to API Gateway to allow API to mainly create log stream and pug logs to CloudWatch.
-          * Each API method has been given permission to invoke relevant Lambda functions.
-     * Lambda
-          * A custom role called serverless_lambda is assigned to Lambda. This role is to allow the following actions to resoureces:
-               * Write CloudWatch Logs 
-               * Read & Write DynamoDB 
-               * Read & Write S3 Objects
+ * Terraform state is managed locally as this requires a dynamoDB table and S3 bucket pre-deifined. However, if you plan to manage state using state lock with S3 and dynamoDB, feel free to uncomment line 19~26 in main.tf and change the values to match your DB name and S3 bucket name.
+ * Security Consideration
+     * VPC
+          * For security concerns, having lambda functions deployed in private subnets in a VPC is recommended. However, due to the simplicity of this project, no VPC is created and utilized in this case. Reasons are as below: 
+               * In this project, interactions between Lambda functions, API Gateway, and DynamoDB are controlled and protected by IAM roles.
+               * Only necessary permissions have been assigned to AWS resources for security reasons.
+               * For future development, if the Lambda functions need to access other resources, such as EC2 instances, RDS instances, or other AWS resources running inside a VPC, then it is recommended to place Lambda functions inside of the VPC. Access to DynamoDB, resources in other VPC, or public internet can be granted by a VPC endpoint or a NAT Gateway.
+     * IAM
+          * API Gateway
+               * api_gateway_cloudwatch_global role is assigned to API Gateway to allow API to create log stream and pug logs to CloudWatch.
+               * Each API method has been given permission to invoke relevant Lambda functions.
+          * Lambda
+               * A custom role called serverless_lambda is assigned to Lambda. This role is to allow the following actions to resoureces:
+                    * Write CloudWatch Logs 
+                    * Read & Write DynamoDB 
+                    * Read & Write S3 Objects
+     * Logging
+          * API Gateway
+               * Lgging level has been set to INFO and all relevant logs can be found under in CloudWatch Log Groups.
+          * Lambda
+               * CloudWatch generates log group for Lambda upon lambda function execution.
+          * DynamoDB
+               * CloudTrail records any events on a DyanmoDB table. However, CloudTrail is not enabled.
+     * Alarms
+          * DynamoDB
+               * CloudWatch alarms when cunsumed read capacity units of DynamoDB table reach certain point (currently, the threshold is set to 1000). Please note that this is an approx number and can be changed as required.
+          * Lambda
+               * CloudWatch alarms when a single error occurs on any lambda functions.
 
 
 ## Justification
