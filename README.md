@@ -1,6 +1,29 @@
 # SimpleCRMAPI
 
 
+## Usage
+
+To run this SimpleCRMAPI you need to execute:
+
+```bash
+$ terraform workspace new dev
+$ terraform init
+$ terraform plan --var-file="dev.tfvars"
+$ terraform apply --var-file="dev.tfvars"
+```
+
+Note that this project may create resources which cost money. Run `terraform destroy --var-file="dev.tfvars"` when you don't need these resources.
+
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.48.0 |
+| <a name="requirement_archive"></a> [null](#requirement\_null) | >= 2.2.0 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | >= 2.2.0 |
+
+
 ## Documentation for API Endpoints
 
 All URIs are relative to SimpleCRMAPI-OAS.yaml or *https://app.swaggerhub.com/apis/k55846/SimpleCRMAPI/1.0.0
