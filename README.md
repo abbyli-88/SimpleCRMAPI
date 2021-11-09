@@ -11,7 +11,7 @@ Please ensure you have AWS CLI and <a name="admin profile" url="https://docs.aws
 To run this SimpleCRMAPI please execute:
 
 ```
-git clone https://github.com/ningguo99/BankAccountApp.git
+git clone https://github.com/gowithkk/SimpleCRMAPI.git
 ```
 
 ```bash
