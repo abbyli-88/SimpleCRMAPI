@@ -38,7 +38,7 @@ Note that this project may create resources which cost money. Run `terraform des
 
 ## Documentation for API Endpoints
 
-All URIs are relative to SimpleCRMAPI-OAS.yaml or *https://app.swaggerhub.com/apis/k55846/SimpleCRMAPI/1.0.0
+All URIs are relative to SimpleCRMAPI-OAS.yaml or https://app.swaggerhub.com/apis/k55846/SimpleCRMAPI/1.0.0
 
 HTTP request | Request Body | Response Body | Description
 ------------ | ------------- | ------------- | ------------- 
@@ -50,9 +50,10 @@ HTTP request | Request Body | Response Body | Description
 
 
 ## Assumptions & Specifications
-
+ * User authentication is not required. API Gateway in this project has been set to No Auth.
  * Each customer has a unique customer id and customer id cannot be changed.
- * For security concerns, a VPC was introducted to this project. 
+ * For security concerns, a VPC was introducted to this project. Since only a few lambda functions, one API gateway, and one single DynamoDB are introducted in this project, no VPC is created for simplicity. Other considerations include, interactions between API gateway, lambda functions, and DynamoDB table are protected by IAM roles. For future development, if Lambda functions need to access other resources, such as EC2 instances, RDS instances, or other AWS resources running inside a VPC, then the Lambda functions need to be placed inside of the VPC and access to DynamoDB can be granted by providing a VPC Endpoint or a NAT Gateway. 
+ * The ideal 
  * Security 
      * API Gateway
           * api_gateway_cloudwatch_global role is assigned to API Gateway to allow API to mainly create log stream and pug logs to CloudWatch.
@@ -66,8 +67,14 @@ HTTP request | Request Body | Response Body | Description
 
 ## Justification
 * DynamoDB 
-* Lambda and API Gateway
+capacity mode is set to On-demand. This is to save cost by paying for the actual reads and writes the application performs.
+In this mode, auto scaling is enabled by default. 
 
+* Lambda 
+lambda suppport auto scaling with no additional cost
+
+* API gateway 
+allows for up to 10,000 requests per second and will scale in response to a large burst of traffic.
 
 ## Author
 Kai Liu | liuky008@gmail.com
