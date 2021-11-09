@@ -2,7 +2,7 @@
 A simple CRM API that manages operations and allows users to list, create, update, and delete customer entries.
 
 ## Infrastructure
-https://github.com/gowithkk/SimpleCRMAPI/blob/main/Image/SimpleCRMAPI-Architecture.png
+![ alt text for screen readers](https://github.com/gowithkk/SimpleCRMAPI/blob/main/Image/SimpleCRMAPI-Architecture.png) 
 
 ## Usage
 
