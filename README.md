@@ -6,12 +6,9 @@ A simple CRM API that manages operations and allows users to list, create, updat
 
 ## Usage
 
-To run this SimpleCRMAPI you need to execute:
+Please ensure you have AWS CLI and <a name="admin profile" url="https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html"> configured before running SimpleCRMAPI. Your admin profile should have certain permission to create IAM role and policy, API Gateway, Lambda, DynamoDB, CloudWatch Log and Alarms.
 
-```bash
-pip install aws
-aws configure
-```
+To run this SimpleCRMAPI please execute:
 
 ```
 git clone https://github.com/ningguo99/BankAccountApp.git
