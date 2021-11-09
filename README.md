@@ -4,9 +4,31 @@ A simple CRM API that manages operations and allows users to list, create, updat
 ## Infrastructure
 ![ alt text for screen readers](https://github.com/gowithkk/SimpleCRMAPI/blob/main/Image/SimpleCRMAPI-Architecture.png) 
 
+## Description
+This SimpleCRMAPI creates the following resources in AWS in support of the insfrature. When executing deployment:
+* SimpleCRMAPI creates the following
+     * Custom IAM policy and roles
+     * API Gateway with a single resource "/Custoemrs" and HTTP Methods
+     * Lambda functions 
+     * DynamoDB
+     * CloudWatch Logs and Alarms
+     * S3 bucket
+* SimpleCRMAPI also zips python source code and uploads zip files to the S3 bucket in support of Lambda functions.
+
+## Documentation for API Endpoints
+
+All URIs are relative to SimpleCRMAPI-OAS.yaml or https://app.swaggerhub.com/apis/k55846/SimpleCRMAPI/1.0.0
+
+HTTP request | Request Body | Response Body | Description
+------------ | ------------- | ------------- | ------------- 
+**GET** /Customers  | None | Array of Customers | Lists all the customers info, cluding customer id as id, first name as fisrtName, last name as lastName, and address.
+**POST** /Customers | Customers | None | Adds a new customer
+**PATCH** /Customers | Customers | None | Updates an existing customer&#39;s info
+**DELETE** /Customers | ID | None |  Deletes an exisitng customer by its ID
+
 ## Usage
 
-Please ensure you have AWS CLI and [Admin Profile](https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html) configured before running SimpleCRMAPI. Your admin profile should have certain permission to create IAM role and policy, API Gateway, Lambda, DynamoDB, CloudWatch Log and Alarms.
+Please ensure you have AWS CLI and [Admin Profile](https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html) configured before running SimpleCRMAPI. Your admin profile should have certain permissions to create IAM role and policy, API Gateway, Lambda, DynamoDB, CloudWatch Log and Alarms.
 
 To run this SimpleCRMAPI please execute:
 
@@ -30,26 +52,15 @@ Note that this project may create resources which cost money. Run `terraform des
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.48.0 |
-| <a name="requirement_archive"></a> [null](#requirement\_null) | >= 2.2.0 |
+| <a name="requirement_archive"></a> [archive](#requirement\_archive) | >= 2.2.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >= 2.2.0 |
 
-
-## Documentation for API Endpoints
-
-All URIs are relative to SimpleCRMAPI-OAS.yaml or https://app.swaggerhub.com/apis/k55846/SimpleCRMAPI/1.0.0
-
-HTTP request | Request Body | Response Body | Description
------------- | ------------- | ------------- | ------------- 
-**GET** /Customers  | None | Array of Customers | Lists all the customers info, cluding customer id as id, first name as fisrtName, last name as lastName, and address.
-**POST** /Customers | Customers | None | Adds a new customer
-**PATCH** /Customers | Customers | None | Updates an existing customer&#39;s info
-**DELETE** /Customers | ID | None |  Deletes an exisitng customer by its ID
-
-
-
 ## Assumptions & Specifications
- * User authentication is not required. API Gateway in this project has been set to No Auth.
- * Each customer has a unique customer id and customer id cannot be changed.
+ * User authentication is not required. Therefore, API Gateway in this project has been set to No Auth.
+ * Each customer has a unique customer id to avoid conflicts. User "id" must be included in the HTTP body when creating, updating, and deleting customer entries in DynamoDB.
+
+
+ * Terraform state is managed locally as this requires a dynamoDB table and S3 bucket predeifined. However, if you plan to manage state using state lock with S3 and dynamoDB, feel free to uncomment line 19~26 in main.tf and change values to match your DB name and S3 bucket name.
  * For security concerns, a VPC was introducted to this project. Since only a few lambda functions, one API gateway, and one single DynamoDB are introducted in this project, no VPC is created for simplicity. Other considerations include, interactions between API gateway, lambda functions, and DynamoDB table are protected by IAM roles. For future development, if Lambda functions need to access other resources, such as EC2 instances, RDS instances, or other AWS resources running inside a VPC, then the Lambda functions need to be placed inside of the VPC and access to DynamoDB can be granted by providing a VPC Endpoint or a NAT Gateway. 
  * The ideal 
  * Security 

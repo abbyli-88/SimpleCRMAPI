@@ -15,6 +15,15 @@ terraform {
   }
 
   required_version = "~> 1.0"
+
+  ## The following block is to manage Terraform State Lock with AWS S3 and DynamoDB
+  ## Feel free to uncomment and change those values to your region, key, S3 name and DynamoDB table name
+  # backend "s3" {
+  #  region         = "ap-southeast-2"
+  #  key            = "DEV/infrastructure.tfstate"
+  #  bucket         = "kailiu-test-tf-bucket"
+  #  dynamodb_table = "kailiu-test-tfstate-table"
+  # }
 }
 
 provider "aws" {
