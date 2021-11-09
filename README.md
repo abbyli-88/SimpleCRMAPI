@@ -6,13 +6,14 @@ A simple CRM API that manages operations and allows users to list, create, updat
 ## Usage
 
 To run this SimpleCRMAPI you need to execute:
-```
-git clone https://github.com/ningguo99/BankAccountApp.git
-```
 
 ```bash
 pip install aws
 aws configure
+```
+
+```
+git clone https://github.com/ningguo99/BankAccountApp.git
 ```
 
 ```bash
