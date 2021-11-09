@@ -6,7 +6,7 @@ A simple CRM API that manages operations and allows users to list, create, updat
 
 ## Usage
 
-Please ensure you have AWS CLI and <a ref="https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html">Admin Profile</a> configured before running SimpleCRMAPI. Your admin profile should have certain permission to create IAM role and policy, API Gateway, Lambda, DynamoDB, CloudWatch Log and Alarms.
+Please ensure you have AWS CLI and [Admin Profile](https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html) configured before running SimpleCRMAPI. Your admin profile should have certain permission to create IAM role and policy, API Gateway, Lambda, DynamoDB, CloudWatch Log and Alarms.
 
 To run this SimpleCRMAPI please execute:
 
