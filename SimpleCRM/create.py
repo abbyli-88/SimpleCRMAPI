@@ -1,21 +1,11 @@
 import json
-import logging
 import boto3
 
-dynamodb = boto3.resource('dynamodb')
-
 def lambda_handler(event, context):
-    # data = json.loads(event['body'])
-    # if 'id' not in data:
-    #     logging.error("Validation Failed")
-    #     raise Exception("Couldn't create the todo item.")
 
+    dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table('SimpleCRM')
-    
-    # all_customers = table.scan()
-    # if event['id'] in all_customers:
-    #     raise Exception("Customer ID exists.")
-    # else:
+
     response = table.put_item(
         Item={
             'id': event['id'],
@@ -25,7 +15,10 @@ def lambda_handler(event, context):
         }
     )
 
+    message = {
+        'message': 'Customer ID '+ event['id'] + ' has been added successfully!'
+    }
     return {
-        'statusCode': response['ResponseMetadata']['HTTPStatusCode'],
-        'body': 'Record ' + event['id'] + ' added.'
+        'statusCode': 200,
+        'body': json.dumps(message)
     }

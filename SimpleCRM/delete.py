@@ -2,6 +2,7 @@ import json
 import boto3
 
 def lambda_handler(event, context):
+    
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table('SimpleCRM')
     
@@ -9,7 +10,11 @@ def lambda_handler(event, context):
         Key={
             'id': event['id']
         })
+    
+    message = {
+        'message': 'Customer ID ' + event['id'] + 'has been deleted.'
+    }
     return {
-        'statusCode': 200,
-        'body': json.dumps(event['id'] + ' has been deleted.')
+        'statusCode': response['ResponseMetadata']['HTTPStatusCode'],
+        'body': json.dumps(message)
     }

@@ -1,0 +1,48 @@
+---
+swagger: "2.0"
+info:
+  description: A simple CRM API that manages operations to list, create, update, and delete customer entries.
+  version: "2021-11-09T09:20:09Z"
+  title: "SimpleCRM_apigw"
+host: "ud3k3mpal4.execute-api.ap-southeast-2.amazonaws.com"
+basePath: "/dev"
+schemes:
+- "https"
+paths:
+  /Customers:
+    get:
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+    post:
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+    delete:
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+    patch:
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+definitions:
+  Empty:
+    type: "object"
+    title: "Empty Schema"

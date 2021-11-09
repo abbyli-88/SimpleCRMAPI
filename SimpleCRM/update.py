@@ -16,7 +16,11 @@ def lambda_handler(event, context):
         },
         ReturnValues="UPDATED_NEW"
     )
+
+    message = {
+        'message': 'Customer ID '+ event['id'] + ' has been updated successfully!'
+    }
     return {
         'statusCode': response['ResponseMetadata']['HTTPStatusCode'],
-        'body': 'Record ' + event['id'] + ' has been updated.'
+        'body': json.dumps(message)
     }

@@ -3,10 +3,10 @@ swagger: "2.0"
 info:
   description: A simple CRM API that manages operations to list, create, update, and delete customer entries.
   version: 1.0.0
-  title: Simple CRM API
-host: AWS
+  title: "SimpleCRM_apigw"
+host: ud3k3mpal4.execute-api.ap-southeast-2.amazonaws.com"
 schemes:
-- https
+- "https"
 paths:
   /Customers:
     get:
